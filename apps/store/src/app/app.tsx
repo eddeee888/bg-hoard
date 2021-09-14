@@ -2,6 +2,7 @@ import styles from './app.module.scss';
 import { getAllGames } from '../fake-api';
 
 import { Header } from '@bg-hoard/store/ui-shared';
+import { formatRating } from '@bg-hoard/store/util-formatters';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -39,7 +40,7 @@ export const App = () => {
                     component="p"
                     className={styles['game-rating']}
                   >
-                    <strong>Rating:</strong> {x.rating}
+                    <strong>Rating:</strong> {formatRating(x.rating)}
                   </Typography>
                 </CardContent>
               </CardActionArea>
