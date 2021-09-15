@@ -49,7 +49,7 @@ export const App = () => {
   }, []);
 
 
-  const title = "Board Game Hoard";
+  const title = "Board Game Hoard 2";
 
   return (
     <>
