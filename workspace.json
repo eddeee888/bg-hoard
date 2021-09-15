@@ -322,6 +322,109 @@
           }
         }
       }
+    },
+    "video-games": {
+      "root": "apps/video-games",
+      "sourceRoot": "apps/video-games/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/video-games",
+            "index": "apps/video-games/src/index.html",
+            "main": "apps/video-games/src/main.tsx",
+            "polyfills": "apps/video-games/src/polyfills.ts",
+            "tsConfig": "apps/video-games/tsconfig.app.json",
+            "assets": [
+              "apps/video-games/src/favicon.ico",
+              "apps/video-games/src/assets"
+            ],
+            "styles": ["apps/video-games/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/video-games/src/environments/environment.ts",
+                  "with": "apps/video-games/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "video-games:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "video-games:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/video-games/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/video-games"],
+          "options": {
+            "jestConfig": "apps/video-games/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "video-games-e2e": {
+      "root": "apps/video-games-e2e",
+      "sourceRoot": "apps/video-games-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/video-games-e2e/cypress.json",
+            "devServerTarget": "video-games:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "video-games:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/video-games-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
     }
   },
   "cli": {
