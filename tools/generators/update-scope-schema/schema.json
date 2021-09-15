@@ -3,15 +3,5 @@
   "cli": "nx",
   "$id": "update-scope-schema",
   "type": "object",
-  "properties": {
-    "defaultProject": {
-      "type": "string",
-      "description": "Default project",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      }
-    }
-  },
-  "required": ["defaultProject"]
+  "properties": {}
 }
