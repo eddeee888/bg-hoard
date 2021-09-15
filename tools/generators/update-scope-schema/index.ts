@@ -16,8 +16,21 @@ function getScopes(nxJson: any) {
   return [...new Set(allScopes)];
 }
 
+function replaceScopes(content: string, scopes: string[]): string {
+  const joinScopes = scopes.map((s) => `'${s}'`).join(' | ');
+  const PATTERN = /interface Schema \{\n.*\n.*\n\}/gm;
+  return content.replace(
+    PATTERN,
+    `interface Schema {
+  name: string;
+  directory: ${joinScopes};
+}`
+  );
+}
+
 export default async function (tree: Tree) {
   const scopes = getScopes(readJson(tree, 'nx.json'));
+
   updateJson(tree, 'tools/generators/util-lib/schema.json', (value) => {
     value.properties.directory['x-prompt'].items = scopes.map((scope) => ({
       value: scope,
@@ -25,5 +38,11 @@ export default async function (tree: Tree) {
     }));
     return value;
   });
+
+  const utilLibIndexFilename = 'tools/generators/util-lib/index.ts';
+  const indexContent = tree.read(utilLibIndexFilename, 'utf-8');
+  const newContent = replaceScopes(indexContent, scopes);
+  tree.write(utilLibIndexFilename, newContent);
+
   await formatFiles(tree);
 }
