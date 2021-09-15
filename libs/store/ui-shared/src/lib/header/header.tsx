@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface HeaderProps {
-  title: string
+  title: string;
 }
 
 export const Header = ({ title }: HeaderProps) => {
